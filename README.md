@@ -91,11 +91,10 @@ The system was developed using:
 ```text
 palm-oil-gene-expression-dashboard/
 │
-├── index.html
+├── visualisasi.html
 ├── dataset.html
 ├── fullscreen.html
 │
-├── style.css
 ├── script.js
 │
 ├── Data_TPM.csv
