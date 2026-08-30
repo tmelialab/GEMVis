@@ -1,0 +1,101 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Fullscreen Visualization</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@2.0.1"></script>
+    <script src="https://cdn.plot.ly/plotly-2.30.0.min.js"></script>
+
+    <style>
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        background: #f5f6fa;
+        font-family: Arial;
+      }
+
+      .container {
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+      }
+
+      .top-bar {
+        padding: 15px;
+      }
+
+      .chart-wrapper {
+        flex: 1;
+        padding: 20px;
+      }
+
+      #chartCanvas,
+      #chartArea {
+        width: 100% !important;
+        height: 100% !important;
+      }
+
+      button {
+        padding: 8px 18px;
+        background: #ddd;
+        border: none;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="top-bar">
+        <button onclick="window.history.back()">Back</button>
+      </div>
+
+      <div class="chart-wrapper">
+        <div id="chartArea"></div>
+        <canvas id="chartCanvas"></canvas>
+      </div>
+    </div>
+
+    <script>
+      const chartType = localStorage.getItem("lastChartType");
+
+      if (chartType === "heatmapTPM" || chartType === "heatmapFC") {
+        const data = JSON.parse(localStorage.getItem("plotlyData"));
+        const layout = JSON.parse(localStorage.getItem("plotlyLayout"));
+
+        Plotly.newPlot(
+          "chartArea",
+          data,
+          {
+            ...layout,
+            autosize: true,
+          },
+          { responsive: true },
+        );
+
+        document.getElementById("chartCanvas").style.display = "none";
+      } else {
+        const savedConfig = JSON.parse(localStorage.getItem("chartJSData"));
+
+        if (savedConfig) {
+          const ctx = document.getElementById("chartCanvas").getContext("2d");
+
+          Chart.register(ChartZoom);
+          new Chart(ctx, {
+            type: savedConfig.type,
+            data: savedConfig.data,
+            options: {
+              ...savedConfig.options,
+              responsive: true,
+              maintainAspectRatio: false,
+            },
+          });
+        }
+
+        document.getElementById("chartArea").style.display = "none";
+      }
+    </script>
+  </body>
+</html>

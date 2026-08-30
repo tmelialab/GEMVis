@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Dataset RNA-seq</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Poppins", sans-serif;
+      }
+
+      body {
+        background: #f5f7fb;
+      }
+      .header {
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 18px 40px;
+        background: #1f2a44;
+        color: white;
+      }
+
+      .logo {
+        font-size: 20px;
+        font-weight: 600;
+      }
+
+      .menu a {
+        color: white;
+        text-decoration: none;
+        margin-left: 25px;
+        font-weight: 500;
+      }
+
+      .menu a:hover {
+        opacity: 0.8;
+      }
+
+      table {
+        border-collapse: collapse;
+        width: 100%;
+        font-size: 12px;
+      }
+
+      th,
+      td {
+        border: 1px solid #ccc;
+        padding: 6px;
+        text-align: center;
+      }
+
+      th {
+        background-color: #f4f4f4;
+        position: sticky;
+        top: 0;
+      }
+
+      .table-container {
+        max-height: 600px;
+        overflow: auto;
+        border: 1px solid #ddd;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- HEADER -->
+    <div class="header">
+      <div class="logo">🧬 Visualisasi Ekspresi Gen RNA-seq</div>
+      <div class="menu">
+        <a href="visualisasi.html">Visualisasi</a>
+        <a href="dataset.html">Dataset</a>
+      </div>
+    </div>
+
+    <!--TABLE-->
+    <div class="table-container">
+      <table id="datasetTable">
+        <thead></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+
+    <script>
+      async function loadDataset() {
+        const res = await fetch("data/Data_TPM.csv");
+        const text = await res.text();
+
+        const rows = text
+          .split("\n")
+          .map((r) => r.trim())
+          .filter((r) => r);
+
+        const headers = rows[0].split(",");
+        const tableHead = document.querySelector("#datasetTable thead");
+        const tableBody = document.querySelector("#datasetTable tbody");
+
+        // Header
+        const headerRow = document.createElement("tr");
+        headers.forEach((h) => {
+          const th = document.createElement("th");
+          th.textContent = h;
+          headerRow.appendChild(th);
+        });
+        tableHead.appendChild(headerRow);
+
+        // Data (batasi 200 baris biar tidak berat)
+        rows.slice(1, 201).forEach((row) => {
+          const tr = document.createElement("tr");
+          row.split(",").forEach((cell) => {
+            const td = document.createElement("td");
+            td.textContent = cell;
+            tr.appendChild(td);
+          });
+          tableBody.appendChild(tr);
+        });
+      }
+
+      loadDataset();
+    </script>
+  </body>
+</html>
