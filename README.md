@@ -58,19 +58,18 @@ The scatter plot is used to compare the expression of two selected genes. The vi
 The dashboard uses RNA-seq gene expression data measured in TPM (Transcripts Per Million). The gene expression data are provided as a matrix in which genes are represented as rows and biological samples are represented as columns.
 
 The dataset consists of three main CSV files:
-
-Data_TPM.csv
-Treatment.csv
-Category.csv
-Dataset Summary
+- Data_TPM.csv
+- Treatment.csv
+- Category.csv
+  
+## Dataset Summary
 Dataset Component	Description
 Total genes	26,060 genes
 Total samples	388 samples
 Treatment categories	33 categories
 Gene categories	26 categories
-Expression unit	TPM (Transcripts Per Million)
+Main expression unit	TPM (Transcripts Per Million)
 Data format	CSV
-Expression data structure	Gene × Sample matrix
 
 ## 1. Data_TPM.csv
 
@@ -170,14 +169,14 @@ palm-oil-gene-expression-dashboard/
 
 Before running the visualization, make sure the following files are located in the same project folder:
 
-index.html
-dataset.html
-fullscreen.html
-style.css
-script.js
-Data_TPM.csv
-Treatment.csv
-Category.csv
+- index.html
+- dataset.html
+- fullscreen.html
+- style.css
+- script.js
+- Data_TPM.csv
+- Treatment.csv
+- Category.csv
 
 A web browser with JavaScript enabled is also required.
 
